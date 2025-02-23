@@ -27,6 +27,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 1rem;
 }
 
 .hero-title {
@@ -41,10 +42,14 @@ body {
     -webkit-background-clip: text;
     background-clip: text;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    margin-top: 45vh;
-    margin-bottom: auto;
     text-align: center;
     z-index: 1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    padding: 0 1rem;
 }
 
 /* Section'lar için ortak arkaplan rengi veriyoruz*/
@@ -67,10 +72,11 @@ body {
 }
 
 .container {
+    width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 2rem;
-    padding-top: 6rem; /* Navbar'ın altında kalması için */
+    padding: 1rem;
+    overflow-x: hidden;
 }
 
 /* Navbar */
@@ -207,8 +213,13 @@ body {
     }
 
     .hero-title {
-        font-size: 5rem;
-        margin-bottom: 1.5rem;
+        font-size: 3.5rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin: 0;
+        width: 90%;
     }
 
     .scroll-down {
@@ -219,16 +230,48 @@ body {
     .container {
         padding-top: 5rem;
     }
-}
 
-/* Çok küçük ekranlar için ek düzenlemeler */
-@media screen and (max-width: 570px) {
-    .hero-title {
-        font-size: 3rem;
+    .character-container {
+        width: 90%;
+        max-width: 280px;
     }
 
-    .navbar-links a {
-        font-size: 1.2rem;
+    .character-container img {
+        width: 200px;
+        height: auto;
+    }
+
+    .character-info {
+        width: 100%;
+        padding: 1rem;
+    }
+
+    .character-info h3 {
+        font-size: 1.5rem;
+    }
+
+    .character-info p {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .hero-title {
+        font-size: 2.8rem;
+        width: 95%;
+    }
+
+    .character-container {
+        width: 95%;
+        max-width: 250px;
+    }
+
+    .character-container img {
+        width: 180px;
+    }
+
+    .container {
+        padding: 1rem;
     }
 }
 
@@ -813,4 +856,11 @@ main {
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+}
+
+/* Card içerikleri için düzeltme */
+.card-content {
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
 }
