@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disenchantment</title>
+    <link rel="stylesheet" href="style.css">
+    <!--favicon ekledim.-->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!--footer, scroll down, toggle ve buton ikonları buradan geliyor.-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Semantik tutarlılık sağlamak için navbar'ı header etiketi içinde kullandım. -->
+    <header class="hero">
+        <div class="logo-container">
+            <a href="#home">
+                <img src="images/logo.png" alt="Disenchantment Logo" class="logo">
+            </a>
+        </div>
+        <h1 class="hero-title">Disenchantment</h1>
+        <nav class="navbar">
+            <input type="checkbox" id="nav-toggle" class="nav-toggle">
+            <label for="nav-toggle" class="nav-toggle-label">
+                <i class="fas fa-bars"></i>
+            </label>
+            <div class="navbar-links">
+                <ul>
+                    <li><a href="#home" class="active">Ana Sayfa</a></li>
+                    <li><a href="#episodes">Bölümler</a></li>
+                    <li><a href="#contact">İletişim</a></li>
+                </ul>
+            </div>
+        </nav>
+        <a href="#home" class="scroll-down">
+            <i class="fas fa-chevron-down"></i>
+        </a>
+    </header>
+
+    <main>
+        <!-- Anasayfa -->
+        <section id="home" class="home-section">
+            <div class="container">
+                <!--Başlığa tıklayınca IMDb sayfası yeni sekmede _blank ile açılıyor-->
+                <a href="https://www.imdb.com/title/tt5363918" target="_blank" class="section-title">Disenchantment</a>
+                <div class="show-content">
+                    <div class="show-header">
+                        <div class="show-poster-wrapper">
+                            <img src="images/disenchantment_poster.jpeg" alt="Disenchantment Poster" class="show-poster">
+                        </div>
+                    </div>
+                    <div class="show-description">
+                        <p>
+                            Orta Çağ'da geçen bu animasyon dizisinde, asi prenses Bean, neşeli arkadaşı Elfo ve kişisel demonu Luci; ejderhalar, şeytanlar, troller ve insanoğlunun arasında maceradan maceraya koşar. Prenses Bean, krallığın geleneklerini hiçe sayarak kendi yolunu çizmeye çalışırken, yanında sadık arkadaşlarıyla birlikte fantastik Dreamland krallığında unutulmaz maceralara atılır.
+                        </p>
+                    </div>
+                </div>
+
+                <h2 class="characters-title">KARAKTERLER</h2>
+                <div class="character-cards">
+                    <div class="character-container">
+                        <img src="images/luci.png" alt="Luci">
+                        <div class="character-info">
+                            <h3>Luci</h3>
+                            <p>Bean'in kişisel demonu Luci, kötü tavsiyeleriyle tanınan küçük siyah bir yaratıktır.</p>
+                        </div>
+                    </div>
+                    <div class="character-container">
+                        <img src="images/bean.png" alt="Princess Bean">
+                        <div class="character-info">
+                            <h3>Princess Bean</h3>
+                            <p>Dreamland'in asi prensesi Bean, kraliyet kurallarına karşı çıkan ve kendi yolunu çizmeye çalışan güçlü bir karakterdir.</p>
+                        </div>
+                    </div>
+                    <div class="character-container">
+                        <img src="images/elfo.png" alt="Elfo">
+                        <div class="character-info">
+                            <h3>Elfo</h3>
+                            <p>Şeker krallığından gelen naif elf Elfo, her zaman pozitif kalan yapısı ve saf karakteriyle dikkat çeker.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="favorite-scene-title">FAVORİ SAHNE</h2>
+                <div class="video-container">
+                    <iframe 
+                        width="100%" 
+                        height="100%" 
+                        src="https://www.youtube.com/embed/OGDRk_hRCnw" 
+                        title="Disenchantment Favori Sahne" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <button id="favoriteBtn" class="favorite-btn">
+                    <i class="fas fa-heart"></i> Favorilere Ekle
+                </button>
+            </div>
+        </section>
+        <!-- Bölümler -->
+        <section id="episodes" class="episodes-section">
+            <div class="container">
+                <h2 class="episodes-title">BÖLÜMLER</h2>
+                <div class="episodes-grid">
+                    <div class="episode-card">
+                        <div class="episode-number">Bölüm 1</div>
+                        <h3>Bir Prenses, Bir Elf ve Bir Şeytan Bara Girer</h3>
+                        <p>Bean, düğün gününde kaçmaya karar verir ve yolda Elfo ve Luci ile tanışır. Bu üçlü, Dreamland'de beklenmedik bir maceraya atılır.</p>
+                    </div>
+
+                    <div class="episode-card">
+                        <div class="episode-number">Bölüm 2</div>
+                        <h3>Domuz Kimin İçin Homurdar</h3>
+                        <p>Bean, babasının gazabından kaçmak için bir domuz çiftliğinde çalışmaya başlar. Elfo ve Luci onu bulmaya çalışırken komik durumlarla karşılaşırlar.</p>
+                    </div>
+
+                    <div class="episode-card">
+                        <div class="episode-number">Bölüm 3</div>
+                        <h3>Karanlığın Prensesi</h3>
+                        <p>Bean, Dreamland'in karanlık sırlarını keşfetmeye başlar. Luci'nin kötü tavsiyeleri ve Elfo'nun saflığı işleri daha da karmaşık hale getirir.</p>
+                    </div>
+
+                    <div class="episode-card">
+                        <div class="episode-number">Bölüm 4</div>
+                        <h3>Şato Partisi Katliamı</h3>
+                        <p>Kral Zøg uzaktayken, Bean şatoda büyük bir parti düzenler. Ancak parti beklenmedik bir şekilde kontrolden çıkar ve kaosa dönüşür.</p>
+                    </div>
+
+                    <div class="episode-card">
+                        <div class="episode-number">Bölüm 5</div>
+                        <h3>Daha Hızlı, Prenses! Öldür! Öldür!</h3>
+                        <p>Bean, krallığın en tehlikeli turnuvasına katılmaya karar verir. Elfo ve Luci, ona yardım etmeye çalışırken durumu daha da zorlaştırırlar.</p>
+                    </div>
+
+                    <div class="episode-card">
+                        <div class="episode-number">Bölüm 6</div>
+                        <h3>Rüyaların Ötesinde</h3>
+                        <p>Bean, geçmişine dair gizemli rüyalar görmeye başlar. Bu rüyaların peşine düşen üçlü, Dreamland'in en karanlık sırlarından biriyle yüzleşmek zorunda kalır.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- navbar'daki iletişimi footer'a yönlendirdim. -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="contact-info">
+                    <h3>İLETİŞİM</h3>
+                    <p class="contact-name">Özkan Yavuz</p>
+                    <div class="contact-links">
+                        <a href="mailto:ozkn.yavz@gmail.com" class="contact-link">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                        <a href="https://github.com/00k4zN" target="_blank" class="contact-link">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://linkedin.com/in/özkan-yavuz-447b4a238" target="_blank" class="contact-link">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+                <p class="copyright">
+                    © 2025 Özkan Yavuz. Tüm hakları saklıdır. <br>
+                    <span class="credits">Insider Testinium Tech Hub JavaScript Developer Bootcamp Projesidir.</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

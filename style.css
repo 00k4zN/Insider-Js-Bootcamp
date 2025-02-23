@@ -1,0 +1,816 @@
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'IM Fell English', serif;
+}
+
+body {
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden; /* Yatay scroll'u engellemek için */
+    position: relative;
+}
+
+.hero {
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+    background-image: url('images/angry.jpeg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-title {
+    font-family: 'IM Fell English', serif;
+    font-size: 5rem;
+    color: transparent;
+    background: linear-gradient(90deg, 
+        #ffd700 0%,
+        #ffd700 60%,  
+        #b8860b 150%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    margin-top: 45vh;
+    margin-bottom: auto;
+    text-align: center;
+    z-index: 1;
+}
+
+/* Section'lar için ortak arkaplan rengi veriyoruz*/
+.home-section,
+.episodes-section,
+.characters-section {
+    background: linear-gradient(135deg,
+        #2C3639 0%,
+        #3A4F52 50%,
+        #2C3639 100%
+    );
+}
+
+.home-section {
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+    padding: 2rem;
+    background-color: #2C3639;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    padding-top: 6rem; /* Navbar'ın altında kalması için */
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    padding: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+}
+
+.navbar-links {
+    display: flex;
+    justify-content: center;
+    z-index: 3;
+}
+
+.navbar-links ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.navbar-links li {
+    list-style: none;
+}
+
+.navbar-links a {
+    color: transparent;
+    text-decoration: none;
+    font-size: 1.8rem;
+    font-family: 'IM Fell English', serif;
+    transition: all 0.3s ease;
+    background: linear-gradient(90deg,
+        #ffd700 0%, /* Başlangıç noktası */
+        #ffd700 50%, /* Orta nokta */
+        #b8860b 120%  /* Bitiş noktasını uzattık */
+    );
+    -webkit-background-clip: text; /* arkaplanı metin içeriğine uygular. */
+    background-clip: text;
+    color: transparent;
+}
+
+.navbar-links a:hover {
+    background: linear-gradient(to bottom, #b8860b, #ffd700);
+    -webkit-background-clip: text;
+    background-clip: text;
+    transform: scale(1.1);
+}
+
+.nav-toggle {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    -webkit-clip-path: inset(100%);
+    clip-path: inset(100%);
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.nav-toggle-label {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    position: absolute;
+    right: 1rem;
+    top: 100%;
+    transform: translateY(-50%);
+    z-index: 4;
+}
+
+.nav-toggle-label i {
+    background: linear-gradient(to bottom, #ffd700, #b8860b);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .nav-toggle-label {
+        display: block;
+        position: fixed;
+        right: 1rem;
+        top: 1rem;
+        transform: none;
+        z-index: 4;
+    }
+
+    .navbar-links {
+        width: 100%;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.9);
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .nav-toggle:checked ~ .navbar-links {
+        transform: translateX(0);
+    }
+
+    /* Mobil menü düzenlemeleri */
+    .navbar-links ul {
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .navbar-links li {
+        text-align: center;
+        padding: 0.8rem 0;
+        border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        width: 100%;
+    }
+
+    .hero-title {
+        font-size: 5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .scroll-down {
+        font-size: 1.5rem;
+        bottom: 1.5rem;
+    }
+
+    .container {
+        padding-top: 5rem;
+    }
+}
+
+/* Çok küçük ekranlar için ek düzenlemeler */
+@media screen and (max-width: 570px) {
+    .hero-title {
+        font-size: 3rem;
+    }
+
+    .navbar-links a {
+        font-size: 1.2rem;
+    }
+}
+
+html {
+    scroll-behavior: smooth; /* Yumuşak kaydırma efekti sağlıyor */
+}
+
+/* Ortak section için kullandım */
+.section {
+    width: 100%;
+    min-height: 100vh;
+    padding: 2rem;
+    position: relative;
+}
+
+.scroll-down {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    cursor: pointer;
+    animation: bounce 2s infinite;
+    color: transparent;
+    background: linear-gradient(to bottom, #ffd700, #b8860b);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0) translateX(-50%);
+    }
+    40% {
+        transform: translateY(-30px) translateX(-50%);
+    }
+    60% {
+        transform: translateY(-15px) translateX(-50%);
+    }
+}
+
+/* IMDb başlığı için */
+.section-title {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #ffd700;
+    background: linear-gradient(to right, #ffd700, #b8860b);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 3.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    text-decoration: none;  /* Link altı çizgiyi kaldır */
+    display: block;  /* Link'i block element yap */
+    transition: transform 0.3s ease;  /* Hover efekti için */
+}
+
+.section-title:hover {
+    transform: scale(1.02);  /* Hover efekti */
+}
+
+.show-content {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row-reverse;  /* Kart ve içeriği tersine çevirmek için kullandım */
+    align-items: flex-start;
+    gap: 3rem;
+    margin-top: 2rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 4rem; /* Kartlarla arasında boşluk */
+}
+
+.show-header {
+    flex-shrink: 0;
+    text-align: center;
+    width: 300px;
+}
+
+.show-title {
+    display: inline-block;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.show-title:hover {
+    transform: scale(1.02);
+}
+
+.show-poster-wrapper {
+    width: 300px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.show-poster {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.show-title h2 {
+    font-size: 2.5rem;
+    color: #ffd700;
+    background: linear-gradient(to right, #ffd700, #b8860b);
+    -webkit-background-clip: text;
+    background-clip: text;
+    margin-top: 1rem;
+}
+
+.show-description {
+    flex: 1;
+    padding: 2rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    backdrop-filter: blur(5px);
+    margin-top: 0;
+}
+
+.show-description p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #fff;
+    text-align: justify;
+    margin-bottom: 1.5rem;
+    word-wrap: break-word;  /* Kelimelerin kaymasını engellemek için */
+    hyphens: auto;  /* Otomatik tire ekleme */
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .show-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .show-header {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .show-description {
+        width: 100%;
+    }
+
+    .show-title h2 {
+        font-size: 2rem;
+    }
+
+    .show-description p {
+        font-size: 1.1rem;
+        text-align: left;  /* Mobilde sola yasla */
+        hyphens: none;  /* Mobilde tire eklemeyi kapat */
+        word-wrap: normal;  /* Normal kelime kaydırma */
+    }
+
+    .section-title {
+        font-size: 2.8rem;
+        margin-bottom: 2rem;
+    }
+}
+
+/* Karakter Card'ları */
+.character-cards {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    padding: 2rem;
+    flex-wrap: wrap;
+}
+
+.character-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 300px;
+}
+
+.character-container img {
+    width: 250px;
+    height: auto;
+}
+
+.character-info {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    padding: 1.5rem;
+    backdrop-filter: blur(5px);
+    width: 100%;
+    text-align: center;
+}
+
+.character-info h3 {
+    color: #ffd700;
+    background: linear-gradient(to right, #ffd700, #b8860b);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.character-info p {
+    color: #fff;
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+/* Mobil görünüm */
+@media screen and (max-width: 768px) {
+    .character-cards {
+        gap: 2rem;
+    }
+
+    .character-container {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+.characters-title {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #ffd700;
+    background: linear-gradient(to right, #ffd700, #b8860b);
+    -webkit-background-clip: text;
+    background-clip: text;
+    font-size: 3rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    margin-top: 2rem;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .characters-title {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+    }
+}
+
+.favorite-scene-title {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #ffd700;
+    background: linear-gradient(to right, #ffd700, #b8860b);
+    -webkit-background-clip: text;
+    background-clip: text;
+    font-size: 3rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    margin-top: 4rem;
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 */
+    margin-bottom: 4rem;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .favorite-scene-title {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        margin-top: 3rem;
+    }
+}
+
+.episodes-title {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #ffd700;
+    background: linear-gradient(to right, #ffd700, #b8860b);
+    -webkit-background-clip: text;
+    background-clip: text;
+    font-size: 3rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.episodes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.episode-card {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    padding: 3rem 2rem 2rem 2rem;
+    backdrop-filter: blur(5px);
+    transition: transform 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.episode-card:hover {
+    transform: translateY(-5px);
+}
+
+.episode-number {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: linear-gradient(to right, #ffd700, #b8860b);
+    padding: 0.3rem 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.episode-card h3 {
+    color: #ffd700;
+    background: linear-gradient(to right, #ffd700, #b8860b);
+    -webkit-background-clip: text;
+    background-clip: text;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    margin-top: 0.5rem;
+    margin-right: 0;
+    line-height: 1.3;
+    padding-right: 4rem;
+}
+
+.episode-card p {
+    color: #fff;
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+@media screen and (max-width: 768px) {
+    .episodes-title {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .episodes-grid {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+
+    .episode-card {
+        padding: 1.5rem;
+    }
+}
+
+/* Main'in margin'ini kaldırmak için */
+main {
+    margin-bottom: 0;
+}
+
+/* Footer'ın margin'ini kaldırıp padding'i artırdım */
+.footer {
+    background: linear-gradient(135deg,
+        #1B2223 0%,
+        #2C3639 50%,
+        #1B2223 100%
+    );
+    padding: 3rem 0;
+    margin-top: 0;
+    border-top: 1px solid rgba(255, 215, 0, 0.1);
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.social-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.social-link {
+    color: #ffd700;
+    font-size: 2rem;
+    background: linear-gradient(to right, #ffd700, #b8860b);
+    -webkit-background-clip: text;
+    background-clip: text;
+    transition: transform 0.3s ease;
+}
+
+.social-link:hover {
+    transform: scale(1.2);
+}
+
+.copyright {
+    color: #fff;
+    text-align: center;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.credits {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+}
+
+/* Mobil için de aynı şekilde düzenlendi */
+@media screen and (max-width: 768px) {
+    .footer {
+        padding: 2rem 0;  /* 1.5rem yerine 2rem */
+        margin-top: 0;    /* 3rem yerine 0 */
+    }
+
+    .social-links {
+        gap: 1.5rem;
+    }
+
+    .social-link {
+        font-size: 1.8rem;
+    }
+
+    .copyright {
+        font-size: 1rem;
+    }
+}
+
+.contact-info {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.contact-info h3 {
+    color: #ffd700;
+    background: linear-gradient(to right, #ffd700, #b8860b);
+    -webkit-background-clip: text;
+    background-clip: text;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.contact-name {
+    color: #fff;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+.contact-links {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact-link {
+    color: #ffd700;
+    text-decoration: none;
+    font-size: 2rem;
+    transition: transform 0.3s ease;
+    background: linear-gradient(to right, #ffd700, #b8860b);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.contact-link:hover {
+    transform: scale(1.2);
+}
+
+@media screen and (max-width: 768px) {
+    .contact-info h3 {
+        font-size: 1.8rem;
+    }
+
+    .contact-name {
+        font-size: 1.2rem;
+    }
+
+    .contact-links {
+        gap: 1.5rem;
+    }
+
+    .contact-link {
+        font-size: 1.8rem;
+    }
+}
+
+.logo-container {
+    position: fixed;
+    top: 1rem;
+    right: 2rem;
+    z-index: 3;
+}
+
+.logo {
+    width: 90px;
+    height: auto;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* Mobil görünüm için */
+@media screen and (max-width: 768px) {
+    .logo-container {
+        right: auto;
+        left: 1rem;
+    }
+
+    .logo {
+        width: 70px;
+    }
+}
+
+.favorite-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 2rem auto;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    background: rgba(0, 0, 0, 0.3);
+    color: #ffd700;
+    border: 2px solid #ffd700;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'IM Fell English', serif;
+}
+
+.favorite-btn:hover {
+    background: rgba(255, 215, 0, 0.1);
+}
+
+.favorite-btn.active {
+    background: #ffd700;
+    color: #2C3639;
+}
+
+@media screen and (max-width: 768px) {
+    .favorite-btn {
+        font-size: 1rem;
+        padding: 0.8rem 1.5rem;
+    }
+}
+
+/* Tüm başlıklar için ortak gradient düzeltmesi */
+.section-title,
+.characters-title,
+.favorite-scene-title,
+.episodes-title,
+.contact-info h3,
+.episode-card h3,
+.card-content h3,
+.show-title h2,
+.hero-title {
+    color: #ffd700; /* Fallback renk */
+    background: linear-gradient(to right, #ffd700, #b8860b);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    width: fit-content; /* Önemli: Yazı genişliği kadar alan kaplar */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* İkonlar ve numaralar için gradient */
+.contact-link,
+.social-link,
+.episode-number,
+.navbar-links a {
+    color: #ffd700; /* Fallback renk */
+    background: linear-gradient(to right, #ffd700, #b8860b);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
