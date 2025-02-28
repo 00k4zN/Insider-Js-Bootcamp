@@ -43,3 +43,75 @@ const sonuc = enUzunZinciriBul(1000000);
 
 console.log(`En uzun zinciri oluşturan sayı: ${sonuc.sayi}`);
 console.log(`Bu sayının oluşturduğu zincirin uzunluğu: ${sonuc.uzunluk} adım`);
+
+// Geri sayım için:
+let countdownInterval;
+const timeInput = document.getElementById('timeInput');
+const startButton = document.getElementById('startButton');
+const resetButton = document.getElementById('resetButton');
+const countdownDisplay = document.getElementById('countdown');
+
+startButton.addEventListener('click', startCountdown);
+resetButton.addEventListener('click', resetCountdown);
+
+function startCountdown() {
+    // Eğer halihazırda bir geri sayım çalışıyorsa, onu durdur
+    clearInterval(countdownInterval);
+    
+    // Input'tan değeri al
+    let time = parseInt(timeInput.value);
+    
+    // Geçerli bir sayı değilse veya negatifse işlemi durdur
+    if (!time || time < 0) {
+        alert('Lütfen geçerli bir sayı giriniz!');
+        return;
+    }
+    
+    // Başlangıç değerini göster
+    countdownDisplay.textContent = time;
+    
+    // Her saniye çalışacak interval'i başlat
+    countdownInterval = setInterval(() => {
+        time--;
+        
+        // Geri sayımı göster
+        countdownDisplay.textContent = time;
+        
+        // Süre dolduğunda
+        if (time <= 0) {
+            clearInterval(countdownInterval);
+            alert('Süre doldu!');
+            timeInput.value = '';
+        }
+    }, 1000);
+    
+    // Başlat butonunun metnini değiştir
+    startButton.textContent = 'Durdur';
+    
+    // Butona tıklandığında artık durdurma fonksiyonunu çağır
+    startButton.removeEventListener('click', startCountdown);
+    startButton.addEventListener('click', stopCountdown);
+}
+
+function stopCountdown() {
+    clearInterval(countdownInterval);
+    
+    // Butonu eski haline getir
+    startButton.textContent = 'Başlat';
+    startButton.removeEventListener('click', stopCountdown);
+    startButton.addEventListener('click', startCountdown);
+}
+
+function resetCountdown() {
+    // Interval'i temizle
+    clearInterval(countdownInterval);
+    
+    // Değerleri sıfırla
+    timeInput.value = '';
+    countdownDisplay.textContent = '0';
+    
+    // Butonu başlangıç durumuna getir
+    startButton.textContent = 'Başlat';
+    startButton.removeEventListener('click', stopCountdown);
+    startButton.addEventListener('click', startCountdown);
+}
