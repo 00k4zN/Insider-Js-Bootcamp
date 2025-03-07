@@ -1,0 +1,252 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #2c3e50 0%, #4a90e2 50%, #2c3e50 100%);
+    color: #f5f7fa;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content-wrapper {
+    flex: 1;
+    padding: 20px;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #f5f7fa;
+    margin-bottom: 20px;
+}
+
+.btn {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 25px;
+    background: linear-gradient(to right, #4a90e2, #63b8ff);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background: linear-gradient(to right, #3a7bd5, #3a6073);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+}
+
+.profile-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    margin: 30px auto;
+    max-width: 1200px;
+}
+
+.profile-card {
+    width: 280px;
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    position: relative;
+}
+
+.profile-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(to right, #4a90e2, #63b8ff);
+}
+
+.profile-card:hover {
+    transform: translateY(-15px) scale(1.03);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.profile-card img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 15px;
+    display: block;
+    border: 5px solid #f8f9fa;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.profile-card:hover img {
+    transform: scale(1.1);
+    border-color: #4a90e2;
+}
+
+.profile-card h3 {
+    margin: 10px 0;
+    color: #2c3e50;
+    font-size: 1.5rem;
+}
+
+.profile-card p {
+    color: #7f8c8d;
+    margin: 5px 0;
+    font-size: 0.95rem;
+}
+
+.profile-card .email {
+    font-size: 0.85rem;
+    color: #95a5a6;
+    word-break: break-all;
+}
+
+.slider-section {
+    margin-top: 40px;
+}
+
+.slider-container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.slider {
+    margin: 0 auto;
+}
+
+.slider .slick-slide {
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+
+.slider .slick-slide:hover {
+    transform: scale(1.05);
+}
+
+.slider-card {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.slider-card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto 10px;
+    border: 3px solid white;
+}
+
+.slider-card h3 {
+    margin: 10px 0;
+    color: #2c3e50;
+}
+
+.slick-prev, .slick-next {
+    width: 40px;
+    height: 40px;
+    background: #4a90e2;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.slick-prev:before, .slick-next:before {
+    font-size: 20px;
+    opacity: 1;
+}
+
+.slick-prev {
+    left: -20px;
+}
+
+.slick-next {
+    right: -20px;
+}
+
+.slick-dots li button:before {
+    font-size: 12px;
+    color: #4a90e2;
+}
+
+.slick-dots li.slick-active button:before {
+    color: #3a7bd5;
+}
+
+.fancybox-content {
+    padding: 30px;
+    border-radius: 15px;
+    background-color: white;
+    color: #333;
+}
+
+.modal-content h2 {
+    color: #2c3e50;
+}
+
+.modal-content p {
+    color: #333;
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+footer {
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin-top: auto;
+}
+
+.copyright {
+    font-size: 14px;
+    color: #f5f7fa;
+    margin: 0;
+}
+
+.credits {
+    font-size: 12px;
+    color: #c3cfe2;
+    font-style: italic;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+    40% {transform: translateY(-20px);}
+    60% {transform: translateY(-10px);}
+}
+
+.bounce {
+    animation: bounce 1s;
+}
+
+@keyframes shake {
+    0%, 100% {transform: translateX(0);}
+    10%, 30%, 50%, 70%, 90% {transform: translateX(-10px);}
+    20%, 40%, 60%, 80% {transform: translateX(10px);}
+}
+
+.shake {
+    animation: shake 0.5s;
+}
