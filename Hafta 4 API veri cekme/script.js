@@ -55,48 +55,36 @@ function addStyles() {
     document.head.appendChild(styleElement);
 }
 
-function fetchUsers() {
-    let deferred = $.Deferred();
-    
+async function fetchUsers() {
     try {
-        let cachedData = localStorage.getItem('userData');
-        let cachedTime = localStorage.getItem('userDataTimestamp');
+        const cachedData = localStorage.getItem('userData');
+        const cachedTime = localStorage.getItem('userDataTimestamp');
 
         if (cachedData && cachedTime) {
-            let now = new Date().getTime();
-            let cacheAge = now - parseInt(cachedTime);
-            let parsedData = JSON.parse(cachedData);
+            const now = new Date().getTime();
+            const cacheAge = now - parseInt(cachedTime);
+            const parsedData = JSON.parse(cachedData);
             
-            if (cacheAge < 24 * 60 * 60 * 1000 && parsedData && parsedData.length > 0) {
-                deferred.resolve(parsedData);
-                return deferred.promise();
+            if (cacheAge < 24 * 60 * 60 * 1000 && parsedData.length > 0) {
+                return parsedData;
             }
         }
-        
-        fetch('https://jsonplaceholder.typicode.com/users')
-            .then(function(response) {
-                if (!response.ok) {
-                    throw new Error('Erişilemedi! HTTP hata kodu: ' + response.status);
-                }
-                return response.json();
-            })
-            .then(function(data) {
-                localStorage.setItem('userData', JSON.stringify(data));
-                
-                let timestamp = new Date().getTime().toString();
-                localStorage.setItem('userDataTimestamp', timestamp);
-                
-                deferred.resolve(data);
-            })
-            .catch(function(error) {
-                deferred.reject(new Error('Veriler alınamadı: ' + error.message));
-            });
-        
-    } catch (hata) {
-        deferred.reject(new Error('İşlem başarısız: ' + hata.message));
+
+        const response = await fetch('https://jsonplaceholder.typicode.com/users');
+
+        if (!response.ok) {
+            throw new Error('Erişilemedi! HTTP hata kodu: ' + response.status);
+        }
+
+        const data = await response.json();
+
+        localStorage.setItem('userData', JSON.stringify(data));
+        localStorage.setItem('userDataTimestamp', new Date().getTime().toString());
+
+        return data;
+    } catch (error) {
+        throw new Error('Veriler alınamadı: ' + error.message);
     }
-    
-    return deferred.promise();
 }
 
 function createUserCard(user) {
@@ -147,22 +135,21 @@ function displayUsers() {
     var $usersContainer = $('#ins-api-users');
     $usersContainer.empty().html('<p>Kullanıcılar yükleniyor...</p>');
     
-    setTimeout(function() {
-        fetchUsers()
-            .then(function(users) {
-                $usersContainer.empty();
+    setTimeout(async function() {
+        try {
+            const users = await fetchUsers();
+            $usersContainer.empty();
+            
+            for (let i = 0; i < users.length; i++) {
+                let user = users[i];
+                let $card = createUserCard(user);
+                $usersContainer.append($card);
                 
-                for (let i = 0; i < users.length; i++) {
-                    let user = users[i];
-                    let $card = createUserCard(user);
-                    $usersContainer.append($card);
-                    
-                    $card.hide().delay(i * 100).fadeIn();
-                }
-            })
-            .fail(function(error) {
-                $usersContainer.html(`<p style="color: red; text-align: center;">HATA: ${error.message}</p>`);
-            });
+                $card.hide().delay(i * 100).fadeIn();
+            }
+        } catch (error) {
+            $usersContainer.html(`<p style="color: red; text-align: center;">HATA: ${error.message}</p>`);
+        }
     }, 500);
 }
 
