@@ -55,107 +55,118 @@ function addStyles() {
     document.head.appendChild(styleElement);
 }
 
-//API ile kullanıcıları çekme
-
-async function fetchUsers() {
-    //hata yönetimi için try-catch bloğu: hata olursa catch bloğu çalışıyor
+function fetchUsers() {
+    let deferred = $.Deferred();
+    
     try {
-        //localStorage'da daha önce kaydedilmiş veri var mı diye kontrol et
-        const cachedData = localStorage.getItem('userData');
-        const cachedTime = localStorage.getItem('userDataTimestamp');
+        let cachedData = localStorage.getItem('userData');
+        let cachedTime = localStorage.getItem('userDataTimestamp');
 
-        //localStorage'da veri var
         if (cachedData && cachedTime) {
-            //şu anki zaman ms cinsinden
-            const now = new Date().getTime();
-
-            //cache yaşı hesaplamamız gerek
-            const cacheAge = now - parseInt(cachedTime);
-            const parsedData = JSON.parse(cachedData);
+            let now = new Date().getTime();
+            let cacheAge = now - parseInt(cachedTime);
+            let parsedData = JSON.parse(cachedData);
             
-            //24 saatten yeni ve içerisinde veri varsa
-            if (cacheAge < 24 * 60 * 60 * 1000 && parsedData.length > 0) {
-                return parsedData;
+            if (cacheAge < 24 * 60 * 60 * 1000 && parsedData && parsedData.length > 0) {
+                deferred.resolve(parsedData);
+                return deferred.promise();
             }
         }
-
-        //localStorage'da veri yok ya da 24 saatten eskiyse fetchle API'den veriyi alıyoruz
-        const response = await fetch('https://jsonplaceholder.typicode.com/users'); //fetch promise döndürüyor o yüzden de await kullanıyoruz
-
-        //hata için response.ok değeri false ise hata var demek
-        if (!response.ok) {
-            throw new Error('Bir hata oluştu! Veri Çekilemedi!');
-        }
-
-        //response.json() ile gelen veriyi javaScript objesine çevirmemiz gerek
-        const data = await response.json(); //yine promise döndürdüğü için await kullanıyoruz
-
-        //localStorage'a veriyi kaydı
-        localStorage.setItem('userData', JSON.stringify(data));
-        localStorage.setItem('userDataTimestamp', new Date().getTime().toString()); //şu anki zamanı ms cinsinden stringe çevirip kaydettik
-
-        return data;
-    } catch (error) {
-        throw new Error('Kullanıcı Verileri Alınamadı' + error.message);
+        
+        fetch('https://jsonplaceholder.typicode.com/users')
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error('Erişilemedi! HTTP hata kodu: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(function(data) {
+                localStorage.setItem('userData', JSON.stringify(data));
+                
+                let timestamp = new Date().getTime().toString();
+                localStorage.setItem('userDataTimestamp', timestamp);
+                
+                deferred.resolve(data);
+            })
+            .catch(function(error) {
+                deferred.reject(new Error('Veriler alınamadı: ' + error.message));
+            });
+        
+    } catch (hata) {
+        deferred.reject(new Error('İşlem başarısız: ' + hata.message));
     }
+    
+    return deferred.promise();
 }
 
-
-//Kullanıcı Kartlarını oluşturma
 function createUserCard(user) {
-    const userCard = document.createElement('div');
-    userCard.className = 'user-card';
-    userCard.setAttribute('data-id', user.id);
+    let $userCard = $('<div>');
+    $userCard.attr('data-id', user.id);
+    $userCard.addClass('user-card');
     
-
-    userCard.innerHTML = `
+    let cardHTML = `
         <h3>${user.name}</h3>
         <p class="user-info"><strong>Email:</strong> ${user.email}</p>
         <p class="user-info"><strong>Telefon:</strong> ${user.phone}</p>
         <p class="user-info"><strong>Adres:</strong> ${user.address.street}, ${user.address.city}</p>
-        <button class="delete-btn" onclick="deleteUser(${user.id})">Sil</button>
+        <button class="delete-btn">Sil</button>
     `;
-    return userCard;
+    
+    $userCard.html(cardHTML);
+    
+    $userCard.find('.delete-btn').on('click', function() {
+        deleteUser(user.id);
+    });
+    
+    return $userCard;
 }
 
-//KUllanıcı Silme
-function deleteUser(userId){
-    const userCard = document.querySelector(`[data-id="${userId}"]`);
-    //kart bulunduysa
-    if(userCard) {
-        userCard.remove();
-    }
+function deleteUser(userId) {
+    $('[data-id="' + userId + '"]').fadeOut('slow', function() {
+        $(this).remove();
+    });
 
-    //localStorage'dan kaldırma
-    const cachedData = JSON.parse(localStorage.getItem('userData')) || [];
-    const updatedData = cachedData.filter(user => user.id !== userId);
+    var cachedData = JSON.parse(localStorage.getItem('userData')) || [];
+    var updatedData = [];
+    
+    for (var i = 0; i < cachedData.length; i++) {
+        if (cachedData[i].id !== userId) {
+            updatedData.push(cachedData[i]);
+        }
+    }
+    
     localStorage.setItem('userData', JSON.stringify(updatedData));
     
-    //tüm kullanıcılar silindiyse zaman damgasını sil
     if (updatedData.length === 0) {
         localStorage.removeItem('userDataTimestamp');
+        $('#ins-api-users').append('<p>Tüm kullanıcılar silindi!</p>');
     }
 }
 
-//Kullanıcıları görüntüleme
-async function displayUsers() {
-    const usersContainer = document.getElementById('ins-api-users');
-    usersContainer.innerHTML = '';
-
-    try {
-        const users = await fetchUsers();
-
-        users.forEach(user => {
-            const userCard = createUserCard(user);
-            usersContainer.appendChild(userCard);
-        });
-    } catch (error) {
-        usersContainer.innerHTML = `<p style="color: red; text-align: center;">${error.message}</p>`;
-    }
+function displayUsers() {
+    var $usersContainer = $('#ins-api-users');
+    $usersContainer.empty().html('<p>Kullanıcılar yükleniyor...</p>');
+    
+    setTimeout(function() {
+        fetchUsers()
+            .then(function(users) {
+                $usersContainer.empty();
+                
+                for (let i = 0; i < users.length; i++) {
+                    let user = users[i];
+                    let $card = createUserCard(user);
+                    $usersContainer.append($card);
+                    
+                    $card.hide().delay(i * 100).fadeIn();
+                }
+            })
+            .fail(function(error) {
+                $usersContainer.html(`<p style="color: red; text-align: center;">HATA: ${error.message}</p>`);
+            });
+    }, 500);
 }
 
-//Sayfa Yükelndiği zaman
-document.addEventListener('DOMContentLoaded', () => {
+$(function() {
     addStyles();
     displayUsers();
 });
